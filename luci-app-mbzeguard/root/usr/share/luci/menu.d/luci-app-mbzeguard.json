@@ -1,0 +1,14 @@
+{
+  "admin/services/mbzeguard": {
+    "title": "MBzeGuard",
+    "order": 42,
+    "action": {
+      "type": "view",
+      "path": "mbzeguard/mbzeguard"
+    },
+    "depends": {
+			"acl": [ "luci-app-mbzeguard" ],
+			"uci": { "mbzeguard": true }
+		}
+  }
+}

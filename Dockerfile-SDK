@@ -1,0 +1,10 @@
+FROM openwrt/sdk:x86_64-v24.10.1
+
+# Обновление feeds и установка luci-base (основа для интерфейса)
+RUN ./scripts/feeds update -a && \
+    ./scripts/feeds install -a && \
+    make defconfig
+
+# Создаём каталоги для будущих кастомных пакетов
+RUN mkdir -p /builder/package/feeds/utilites/ && \
+    mkdir -p /builder/package/feeds/luci/

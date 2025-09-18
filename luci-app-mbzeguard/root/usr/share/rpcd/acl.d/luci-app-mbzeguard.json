@@ -1,0 +1,28 @@
+{
+  "luci-app-mbzeguard": {
+    "description": "Grant UCI and RPC access to LuCI app mbzeguard",
+    "read": {
+      "file": {
+        "/etc/init.d/mbzeguard": [
+          "exec"
+        ],
+        "/usr/bin/mbzeguard": [
+          "exec"
+        ]
+      },
+      "ubus": {
+        "service": [
+          "list"
+        ]
+      },
+      "uci": [
+        "mbzeguard"
+      ]
+    },
+    "write": {
+      "uci": [
+        "mbzeguard"
+      ]
+    }
+  }
+}
