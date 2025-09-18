@@ -45,6 +45,35 @@ function createConfigSection(section, map, network) {
     o.sectionDescriptions = new Map();
     o.placeholder = 'vless://uuid@server:port?type=tcp&security=tls#main\n// backup ss://method:pass@server:port\n// backup2 vless://uuid@server:port?type=grpc&security=reality#alt';
 
+    let dnsOpt = s.taboption('basic', form.ListValue, 'dns_server', _('DNS server'), _('Выберите или введите адрес DNS сервера'));
+    Object.entries(constants.DNS_SERVER_OPTIONS).forEach(([value, label]) => {
+        dnsOpt.value(value, _(label));
+    });
+    dnsOpt.default = 'offline';
+    dnsOpt.rmempty = false;
+    dnsOpt.ucisection = s.section;
+
+    dnsOpt.validate = function (section_id, value) {
+        if (!value || value === 'offline') return true;
+
+        const ipRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
+        if (ipRegex.test(value)) {
+            const parts = value.split('.');
+            for (const part of parts) {
+                const num = parseInt(part);
+                if (num < 0 || num > 255) {
+                    return _('Invalid IP part in DNS address');
+                }
+            }
+            return true;
+        }
+
+        const domainRegex = /^(?!-)[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+$/;
+        if (domainRegex.test(value)) return true;
+
+        return _('Invalid DNS server format. Examples: 8.8.8.8 or dns.example.com');
+    };
+
     o.renderWidget = function (section_id, option_index, cfgvalue) {
         const original = form.TextValue.prototype.renderWidget.apply(this, [section_id, option_index, cfgvalue]);
         const container = E('div', {});
