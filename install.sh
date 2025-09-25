@@ -67,8 +67,8 @@ main() {
         add_tunnel
     fi
 
-    opkg install $DOWNLOAD_DIR/mbzeguard*.ipk
-    opkg install $DOWNLOAD_DIR/luci-app-mbzeguard*.ipk
+    # opkg install $DOWNLOAD_DIR/mbzeguard*.ipk
+    # opkg install $DOWNLOAD_DIR/luci-app-mbzeguard*.ipk
 
     echo "Русский язык интерфейса ставим? y/n (Need a Russian translation?)"
     while true; do
